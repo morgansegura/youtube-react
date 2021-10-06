@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"checkJs": true,
+		"jsx": "react",
+		"paths": {
+			"@assets/*": ["src/assets/*"],
+			"@components/*": ["src/components/*"],
+			"@context/*": ["src/context/*"],
+			"@hooks/*": ["src/hooks/*"],
+			"@icons/*": ["src/components/Icons"],
+			"@pages/*": ["src/pages/*"],
+			"@skeletons/*": ["src/skeletons/*"],
+			"@src/*": ["src/*"],
+			"@styled/*": ["src/styled/*"],
+			"@utils/*": ["src/utils/*"]
+		}
+	},
+	"exclude": ["node_modules", "build"]
+}
