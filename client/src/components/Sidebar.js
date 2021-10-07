@@ -16,9 +16,9 @@ import {
 	VidIcon
 } from '@icons'
 
-function Sidebar() {
+function Sidebar({ isSidebarOpen }) {
 	return (
-		<Wrapper>
+		<Wrapper open={isSidebarOpen}>
 			<NavLink exact to="/">
 				<div className="icon">
 					<HomeIcon />

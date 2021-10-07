@@ -7,11 +7,14 @@ import Wrapper from '@styled/Navbar'
 // Icons
 import { AppsIcon, HamburgerIcon, LogoIcon, SettingsIcon } from '@icons'
 
-function Navbar() {
+function Navbar({ toggleSidebarOpen }) {
 	return (
 		<Wrapper>
 			<div className="logo flex-row">
-				<HamburgerIcon className="toggle-navhandler" />
+				<HamburgerIcon
+					onClick={toggleSidebarOpen}
+					className="toggle-navhandler hamburger-icon"
+				/>
 				<span>
 					<NavLink to="/">
 						<LogoIcon

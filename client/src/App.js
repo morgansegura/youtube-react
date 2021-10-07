@@ -18,10 +18,14 @@ import {
 import { Container } from './styled'
 
 function App() {
+	const [isSidebarOpen, setSidebarOpen] = React.useState(false)
+
+	const toggleSidebarOpen = () => setSidebarOpen(!isSidebarOpen)
+
 	return (
 		<>
-			<Navbar />
-			<Sidebar />
+			<Navbar toggleSidebarOpen={toggleSidebarOpen} />
+			<Sidebar isSidebarOpen={isSidebarOpen} />
 			<MobileNavbar />
 			<Container>
 				<Switch>
