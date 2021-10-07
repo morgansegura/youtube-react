@@ -1,5 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-ReactDOM.render(<App />, document.getElementById("root"));
+// Components
+import { AppProviders } from '@components'
+import App from './App'
+
+ReactDOM.render(
+	<AppProviders>
+		<App />
+	</AppProviders>,
+	document.getElementById('root')
+)

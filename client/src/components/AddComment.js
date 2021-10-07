@@ -1,7 +1,7 @@
 import React from 'react'
 import defaultAvatar from '@assets/default-avatar.png'
 import Wrapper from '@styled/CommentList'
-import CommentList from '@components'
+import { CommentList } from '@components'
 
 function AddComment() {
 	return (
