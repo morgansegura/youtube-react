@@ -1,9 +1,16 @@
-import express from "express";
+import express from 'express'
+import { protect, getAuthUser } from '../middleware/authorization'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 function getUserRoutes() {
-  const router = express.Router();
+	const router = express.Router()
 
-  return router;
+	router.get('/', getLikedVideos)
+	router.get('/', getHistory)
+
+	return router
 }
 
 async function getLikedVideos(req, res, next) {}
@@ -22,4 +29,4 @@ async function getProfile(req, res, next) {}
 
 async function editUser(req, res) {}
 
-export { getUserRoutes };
+export { getUserRoutes }
