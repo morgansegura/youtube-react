@@ -1,6 +1,11 @@
 // @ts-nocheck
 import React from 'react'
-import Wrapper from '../styled/Sidebar'
+import { NavLink } from 'react-router-dom'
+// Components
+import { SidebarAuth } from '@components'
+// Styled
+import Wrapper from '@styled/Sidebar'
+// Icons
 import {
 	HistoryIcon,
 	HomeIcon,
@@ -9,48 +14,60 @@ import {
 	SubIcon,
 	TrendingIcon,
 	VidIcon
-} from './Icons'
-import SidebarAuth from './SidebarAuth'
+} from '@icons'
 
 function Sidebar() {
 	return (
 		<Wrapper>
-			<div className="icon">
-				<HomeIcon />
-				<span>Home</span>
-			</div>
+			<NavLink exact to="/">
+				<div className="icon">
+					<HomeIcon />
+					<span>Home</span>
+				</div>
+			</NavLink>
+			<NavLink to="/feed/trending">
+				<div className="icon">
+					<TrendingIcon />
+					<span>Trending</span>
+				</div>
+			</NavLink>
 
-			<div className="icon">
-				<TrendingIcon />
-				<span>Trending</span>
-			</div>
-
-			<div className="icon">
-				<SubIcon />
-				<span>Subscriptions</span>
-			</div>
+			<NavLink to="/feed/subscriptions">
+				<div className="icon">
+					<SubIcon />
+					<span>Subscriptions</span>
+				</div>
+			</NavLink>
 
 			<div className="divider"></div>
 
-			<div className="icon">
-				<LibIcon />
-				<span>Library</span>
-			</div>
+			<NavLink to="/feed/library">
+				<div className="icon">
+					<LibIcon />
+					<span>Library</span>
+				</div>
+			</NavLink>
 
-			<div className="icon">
-				<HistoryIcon />
-				<span>History</span>
-			</div>
+			<NavLink to="/feed/history">
+				<div className="icon">
+					<HistoryIcon />
+					<span>History</span>
+				</div>
+			</NavLink>
 
-			<div className="icon">
-				<VidIcon />
-				<span>Your videos</span>
-			</div>
+			<NavLink to="/feed/my-videos">
+				<div className="icon">
+					<VidIcon />
+					<span>Your videos</span>
+				</div>
+			</NavLink>
 
-			<div className="icon">
-				<LikeIcon />
-				<span>Liked videos</span>
-			</div>
+			<NavLink to="/feed/liked-videos">
+				<div className="icon">
+					<LikeIcon />
+					<span>Liked videos</span>
+				</div>
+			</NavLink>
 
 			<div className="divider"></div>
 

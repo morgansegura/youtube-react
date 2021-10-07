@@ -1,8 +1,11 @@
 import React from 'react'
-import Wrapper from '../styled/Navbar'
-import GoogleAuth from './GoogleAuth'
-import { AppsIcon, HamburgerIcon, LogoIcon, SettingsIcon } from './Icons'
-import Search from './Search'
+import { NavLink } from 'react-router-dom'
+// Components
+import { GoogleAuth, Search } from '@components'
+// Styled
+import Wrapper from '@styled/Navbar'
+// Icons
+import { AppsIcon, HamburgerIcon, LogoIcon, SettingsIcon } from '@icons'
 
 function Navbar() {
 	return (
@@ -10,12 +13,14 @@ function Navbar() {
 			<div className="logo flex-row">
 				<HamburgerIcon className="toggle-navhandler" />
 				<span>
-					<LogoIcon
-						style={{
-							width: 80,
-							height: 24
-						}}
-					/>
+					<NavLink to="/">
+						<LogoIcon
+							style={{
+								width: 80,
+								height: 24
+							}}
+						/>
+					</NavLink>
 				</span>
 			</div>
 

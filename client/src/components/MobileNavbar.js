@@ -1,26 +1,33 @@
 import React from 'react'
-import Wrapper from '../styled/MobileNavbar'
-import {
-	HistoryIcon,
-	HomeIcon,
-	SubIcon,
-	TrendingIcon,
-	WatchIcon
-} from './Icons'
+import { NavLink } from 'react-router-dom'
+// Styled
+import Wrapper from '@styled/MobileNavbar'
+// Icons
+import { HistoryIcon, HomeIcon, SubIcon, TrendingIcon, WatchIcon } from '@icons'
 
 function MobileNavbar() {
 	return (
 		<Wrapper>
 			<div className="icons">
-				<HomeIcon />
+				<NavLink exact to="/">
+					<HomeIcon />
+				</NavLink>
 
-				<TrendingIcon />
+				<NavLink to="/feed/trending">
+					<TrendingIcon />
+				</NavLink>
 
-				<SubIcon />
+				<NavLink to="/feed/subscriptions">
+					<SubIcon />
+				</NavLink>
 
-				<HistoryIcon />
+				<NavLink to="/feed/history">
+					<HistoryIcon />
+				</NavLink>
 
-				<WatchIcon />
+				<NavLink to="/feed/liked-videos">
+					<WatchIcon />
+				</NavLink>
 			</div>
 		</Wrapper>
 	)
