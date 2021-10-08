@@ -1,7 +1,7 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 // Components
-import { ErrorMessage } from '@components'
+import { ErrorMessage, VideoCard } from '@components'
 // Skeletons
 import { HomeSkeleton } from '@skeletons'
 // Styled
@@ -12,17 +12,26 @@ import { client } from '../utils/api-client'
 function Home() {
 	const {
 		data: videos,
+		isSuccess,
 		isLoading,
 		isError,
 		error
-	} = useQuery('Home', () => client.get('/videos').then(res => res.data))
+	} = useQuery('Home', () =>
+		client.get('/videos').then(res => res.data.videos)
+	)
 
 	if (isLoading) return <HomeSkeleton />
 	if (isError) return <ErrorMessage error={error} />
 
 	return (
 		<Wrapper>
-			<VideoGrid>Recommended videos</VideoGrid>
+			<VideoGrid>
+				{isSuccess
+					? videos.map(video => (
+							<VideoCard key={video.id} video={video} />
+					  ))
+					: null}
+			</VideoGrid>
 		</Wrapper>
 	)
 }
