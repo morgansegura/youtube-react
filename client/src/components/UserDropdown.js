@@ -1,25 +1,31 @@
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+// Utils
+import { signoutUser } from '@utils/api-client'
 import { Menu, MenuButton, MenuItem, MenuList } from '@reach/menu-button'
 import '@reach/menu-button/styles.css'
-import React from 'react'
-import Avatar from '../styled/Avatar'
-import { ChannelIcon, SignoutIcon } from './Icons'
+// Styled
+import Avatar from '@styled/Avatar'
+// Icons
+import { ChannelIcon, SignoutIcon } from '@icons'
 
-function UserDropdown() {
+function UserDropdown({ user }) {
+	const history = useHistory()
 	return (
 		<Menu>
 			<MenuButton>
 				<Avatar
 					className="pointer"
-					src="https://dummyimage.com/100x100"
-					alt="username avatar"
+					src={user.avatar}
+					alt={user.username}
 				/>
 			</MenuButton>
 			<MenuList>
-				<MenuItem onSelect={() => null}>
+				<MenuItem onSelect={() => history.push(`/channel/${user.id}`)}>
 					<ChannelIcon />
 					<span>Your channel</span>
 				</MenuItem>
-				<MenuItem onSelect={() => null}>
+				<MenuItem onSelect={signoutUser}>
 					<SignoutIcon />
 					<span>Sign out</span>
 				</MenuItem>

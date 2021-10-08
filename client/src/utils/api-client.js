@@ -1,6 +1,28 @@
-export function authenticate() {}
+import axios from 'axios'
 
-export async function signoutUser() {}
+export const client = axios.create({
+	baseURL: '/api/v1'
+})
+
+export function authenticate(response) {
+	client({
+		method: 'POST',
+		url: '/auth/google-login',
+		data: { idToken: response.tokenId }
+	})
+		.then(response => {
+			console.log('Signin Successful: ', response)
+			window.location.assign(window.location.href)
+		})
+		.catch(error => {
+			console.group('Sign in error: ', error.response)
+		})
+}
+
+export async function signoutUser() {
+	await client.get('/auth/signout')
+	window.location.pathname = '/'
+}
 
 export async function updateUser() {}
 

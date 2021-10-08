@@ -1,13 +1,23 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+// Context
+import { useAuth } from '@context/auth-context'
 // Components
-import { GoogleAuth, Search } from '@components'
+import { GoogleAuth, Search, UserDropdown } from '@components'
 // Styled
 import Wrapper from '@styled/Navbar'
 // Icons
-import { AppsIcon, HamburgerIcon, LogoIcon, SettingsIcon } from '@icons'
+import {
+	AppsIcon,
+	HamburgerIcon,
+	LogoIcon,
+	SettingsIcon,
+	UploadIcon
+} from '@icons'
 
 function Navbar({ toggleSidebarOpen }) {
+	const user = useAuth()
+
 	return (
 		<Wrapper>
 			<div className="logo flex-row">
@@ -30,16 +40,9 @@ function Navbar({ toggleSidebarOpen }) {
 			<Search />
 
 			<ul>
-				<li>
-					<AppsIcon />
-				</li>
-				<li>
-					<SettingsIcon />
-				</li>
-				<li>
-					{' '}
-					<GoogleAuth />
-				</li>
+				<li>{user ? <UploadIcon /> : <AppsIcon />}</li>
+				<li>{user ? <AppsIcon /> : <SettingsIcon />}</li>
+				<li> {user ? <UserDropdown user={user} /> : <GoogleAuth />}</li>
 			</ul>
 		</Wrapper>
 	)
