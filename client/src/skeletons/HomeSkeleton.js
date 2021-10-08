@@ -1,7 +1,8 @@
 import React from 'react'
-import Wrapper from '../styled/Home'
-import { VideoCardSkeleton } from '../styled/Skeleton'
-import VideoGrid from '../styled/VideoGrid'
+// Styled
+import Wrapper from '@styled/Home'
+import { VideoCardSkeleton } from '@styled/Skeleton'
+import VideoGrid from '@styled/VideoGrid'
 
 function HomeSkeleton() {
 	return (

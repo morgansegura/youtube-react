@@ -1,7 +1,9 @@
 import React from 'react'
-import Wrapper from '../styled/ErrorMessage'
+// Styled
+import Wrapper from '@styled/ErrorMessage'
 
 function ErrorMessage({ error, ...props }) {
+	console.log(error)
 	return (
 		<Wrapper role="alert" {...props}>
 			<h2>Oops, something went wrong:</h2>
