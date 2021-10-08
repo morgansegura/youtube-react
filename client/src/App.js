@@ -1,6 +1,10 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { MobileNavbar, Navbar, Sidebar } from './components'
+// Hooks
+import { useLocationChange } from '@hooks'
+// Components
+import { MobileNavbar, Navbar, Sidebar } from '@components'
+// Pages
 import {
 	Channel,
 	History,
@@ -13,14 +17,17 @@ import {
 	Trending,
 	WatchVideo,
 	YourVideos
-} from './pages'
-
-import { Container } from './styled'
+} from '@pages'
+// Styled
+import { Container } from '@styled'
 
 function App() {
 	const [isSidebarOpen, setSidebarOpen] = React.useState(false)
 
+	const handleCloseSidebar = () => setSidebarOpen(false)
 	const toggleSidebarOpen = () => setSidebarOpen(!isSidebarOpen)
+
+	useLocationChange(handleCloseSidebar)
 
 	return (
 		<>
