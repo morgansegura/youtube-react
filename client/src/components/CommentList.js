@@ -1,27 +1,43 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+// Utils
+import { formatCreatedAt } from '@utils/date'
+// Components
+import { DeleteCommentDropdown } from '@components'
 
-function CommentList({ video }) {
-	return <>comment list</>
+function CommentList({ comments }) {
+	return comments.map(comment => (
+		<Comment key={comment.id} comment={comment} />
+	))
 }
 
-// function Comment() {
-//   return (
-//     <div className="comment">
-//       <span>
-//         <img src="" alt="avatar" />
-//       </span>
-//       <div className="comment-info" style={{ flex: "1 1 0" }}>
-//         <p className="secondary">
-//           <span>
-//             <span className="user-channel">username</span>
-//           </span>
-//           <span style={{ marginLeft: "0.6rem" }}>createdAt</span>
-//         </p>
-//         <p>Text</p>
-//       </div>
-//       <DeleteCommentDropdown />
-//     </div>
-//   );
-// }
+function Comment({ comment }) {
+	return (
+		<div className="comment">
+			<Link to={`/comment/${comment.user.id}`}>
+				<img
+					src={comment.user.avatar}
+					alt={`${comment.user.username} avatar`}
+				/>
+			</Link>
+			<div className="comment-info" style={{ flex: '1 1 0' }}>
+				<p className="secondary">
+					<span>
+						<Link
+							to={`/comment/${comment.user.id}`}
+							className="user-channel">
+							{comment.user.username}
+						</Link>
+					</span>
+					<span style={{ marginLeft: '0.6rem' }}>
+						{formatCreatedAt(comment.createdAt)}
+					</span>
+				</p>
+				<p>{comment.text}</p>
+			</div>
+			<DeleteCommentDropdown comment={comment} />
+		</div>
+	)
+}
 
 export default CommentList
