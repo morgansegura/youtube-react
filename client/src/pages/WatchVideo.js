@@ -2,7 +2,7 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router'
-import { client } from '@utils/api-client'
+import { client, likeVideo, dislikeVideo } from '@utils/api-client'
 import { formatCreatedAt } from '@utils/date'
 // Components
 import { AddComment, NoResults, VideoPlayer } from '@components'
@@ -26,8 +26,6 @@ function WatchVideo() {
 		() => client.get(`/videos`).then(res => res.data.videos)
 	)
 
-	console.log({ next })
-
 	if (isLoadingVideo || isLoadingNext) {
 		return <WatchVideoSkeleton />
 	}
@@ -39,6 +37,16 @@ function WatchVideo() {
 				text="The page you are looking for is not found or it may have been removed"
 			/>
 		)
+	}
+
+	function handleLikeVideo(videoId) {
+		likeVideo(videoId)
+	}
+	function handleDislikeVideo(videoId) {
+		dislikeVideo(videoId)
+	}
+	function handleToggleSubscribe(videoId) {
+		likeVideo(videoId)
 	}
 
 	return (
@@ -63,12 +71,17 @@ function WatchVideo() {
 
 						<div className="likes-dislikes flex-row">
 							<p className="flex-row like">
-								<LikeIcon /> <span>{video.likesCount}</span>
+								<LikeIcon
+									onClick={() => handleLikeVideo(video.id)}
+								/>{' '}
+								<span>{video.likesCount}</span>
 							</p>
 							<p
 								className="flex-row dislike"
 								style={{ marginLeft: '1rem' }}>
-								<DislikeIcon />{' '}
+								<DislikeIcon
+									onClick={() => handleDislikeVideo(video.id)}
+								/>{' '}
 								<span>{video.dislikesCount}</span>
 							</p>
 						</div>

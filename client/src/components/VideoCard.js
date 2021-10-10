@@ -8,7 +8,7 @@ import { formatCreatedAt } from '@utils/date'
 import Avatar from '@styled/Avatar'
 import Wrapper from '@styled/VideoCard'
 
-function VideoCard({ video, hideAvatar }) {
+function VideoCard({ video, hideAvatar, noUsername }) {
 	return (
 		<Wrapper>
 			<Link to={`/watch/${video.id}`}>
@@ -24,7 +24,7 @@ function VideoCard({ video, hideAvatar }) {
 						<Avatar
 							style={{ marginRight: '0.8rem' }}
 							src={video.user.avatar}
-							alt={video.user.name}
+							alt={`${video.user.username}'s channel avatar`}
 						/>
 					)}
 				</div>
@@ -32,9 +32,13 @@ function VideoCard({ video, hideAvatar }) {
 					<Link to={`/watch/${video.id}`}>
 						<h4 className="truncate">{video.title}</h4>
 					</Link>
-					<span>
-						<span className="secondary">{video.user.username}</span>
-					</span>
+					{!noUsername && (
+						<Link to={`/channel/${video.user.id}`}>
+							<span className="secondary">
+								{video.user.username}
+							</span>
+						</Link>
+					)}
 					<p className="secondary leading-4">
 						<span>{video.views} views</span> <span>•</span>{' '}
 						<span>{formatCreatedAt(video.createdAt)}</span>
