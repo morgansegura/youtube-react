@@ -2,7 +2,12 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router'
-import { client, likeVideo, dislikeVideo } from '@utils/api-client'
+import {
+	client,
+	likeVideo,
+	dislikeVideo,
+	toggleSubscribeUser
+} from '@utils/api-client'
 import { formatCreatedAt } from '@utils/date'
 // Components
 import { AddComment, NoResults, VideoPlayer } from '@components'
@@ -45,8 +50,8 @@ function WatchVideo() {
 	function handleDislikeVideo(videoId) {
 		dislikeVideo(videoId)
 	}
-	function handleToggleSubscribe(videoId) {
-		likeVideo(videoId)
+	function handleToggleSubscribe(channelId) {
+		toggleSubscribeUser(channelId)
 	}
 
 	return (
@@ -105,11 +110,22 @@ function WatchVideo() {
 						</div>
 
 						{!video.isVideoMine && !video.isSubscribed && (
-							<Button>Subscribe</Button>
+							<Button
+								onClick={() =>
+									handleToggleSubscribe(video.user.id)
+								}>
+								Subscribe
+							</Button>
 						)}
 
 						{!video.isVideoMine && video.isSubscribed && (
-							<Button>Subscribed</Button>
+							<Button
+								grey
+								onClick={() =>
+									handleToggleSubscribe(video.user.id)
+								}>
+								Subscribed
+							</Button>
 						)}
 					</div>
 
