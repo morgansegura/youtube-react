@@ -25,7 +25,10 @@ function AddComment({ video }) {
 
 			addComment({ video, comment })
 				.then(() => setComment(''))
-				.catch(() => openSnackbar('Sign in to add a comment'))
+				.catch(() => {
+					openSnackbar('Sign in to add a comment')
+					setComment('')
+				})
 		}
 	}
 
@@ -40,7 +43,7 @@ function AddComment({ video }) {
 					<img src={defaultAvatar} alt="default user" />
 				)}
 				<textarea
-					placeholder="Add a public comment..."
+					placeholder="Add a public comment and hit enter..."
 					value={comment}
 					onKeyDown={handleAddComment}
 					onChange={event => setComment(event.target.value)}

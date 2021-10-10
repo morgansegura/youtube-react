@@ -15,8 +15,11 @@ import {
 	TrendingIcon,
 	VidIcon
 } from '@icons'
+import { useAuth } from '../context/auth-context'
+import { Subscriptions } from '.'
 
 function Sidebar({ isSidebarOpen }) {
+	const user = useAuth()
 	return (
 		<Wrapper open={isSidebarOpen}>
 			<NavLink exact to="/">
@@ -71,7 +74,7 @@ function Sidebar({ isSidebarOpen }) {
 
 			<div className="divider"></div>
 
-			<SidebarAuth />
+			{user ? <Subscriptions user={user} /> : <SidebarAuth />}
 		</Wrapper>
 	)
 }
