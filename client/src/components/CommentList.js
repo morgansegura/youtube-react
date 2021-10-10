@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
-function CommentList() {
-  return <>comment list</>;
+function CommentList({ video }) {
+	return <>comment list</>
 }
 
 // function Comment() {
@@ -24,4 +24,4 @@ function CommentList() {
 //   );
 // }
 
-export default CommentList;
+export default CommentList

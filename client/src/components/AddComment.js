@@ -3,7 +3,7 @@ import defaultAvatar from '@assets/default-avatar.png'
 import Wrapper from '@styled/CommentList'
 import { CommentList } from '@components'
 
-function AddComment() {
+function AddComment({ video }) {
 	return (
 		<Wrapper>
 			<h3>0 comments</h3>

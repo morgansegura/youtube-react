@@ -3,17 +3,11 @@ import { NavLink } from 'react-router-dom'
 // Context
 import { useAuth } from '@context/auth-context'
 // Components
-import { GoogleAuth, Search, UserDropdown } from '@components'
+import { GoogleAuth, Search, UserDropdown, UploadVideo } from '@components'
 // Styled
 import Wrapper from '@styled/Navbar'
 // Icons
-import {
-	AppsIcon,
-	HamburgerIcon,
-	LogoIcon,
-	SettingsIcon,
-	UploadIcon
-} from '@icons'
+import { AppsIcon, HamburgerIcon, LogoIcon, SettingsIcon } from '@icons'
 
 function Navbar({ toggleSidebarOpen }) {
 	const user = useAuth()
@@ -23,7 +17,7 @@ function Navbar({ toggleSidebarOpen }) {
 			<div className="logo flex-row">
 				<HamburgerIcon
 					onClick={toggleSidebarOpen}
-					className="toggle-navhandler hamburger-icon"
+					className="toggle-navhandler"
 				/>
 				<span>
 					<NavLink to="/">
@@ -40,9 +34,9 @@ function Navbar({ toggleSidebarOpen }) {
 			<Search />
 
 			<ul>
-				<li>{user ? <UploadIcon /> : <AppsIcon />}</li>
+				<li>{user ? <UploadVideo /> : <AppsIcon />}</li>
 				<li>{user ? <AppsIcon /> : <SettingsIcon />}</li>
-				<li> {user ? <UserDropdown user={user} /> : <GoogleAuth />}</li>
+				<li>{user ? <UserDropdown user={user} /> : <GoogleAuth />}</li>
 			</ul>
 		</Wrapper>
 	)

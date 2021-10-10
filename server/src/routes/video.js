@@ -1,6 +1,6 @@
-import express from 'express'
-import { protect, getAuthUser } from '../middleware/authorization'
 import { PrismaClient } from '@prisma/client'
+import express from 'express'
+import { getAuthUser, protect } from '../middleware/authorization'
 
 const prisma = new PrismaClient()
 
@@ -14,17 +14,18 @@ function getVideoRoutes() {
 	router.get('/search', searchVideos)
 
 	router.get('/:videoId', getAuthUser, getVideo)
+	router.delete('/:videoId', protect, deleteVideo)
+
 	router.get('/:videoId/view', getAuthUser, addVideoView)
 	router.get('/:videoId/like', protect, likeVideo)
 	router.get('/:videoId/dislike', protect, dislikeVideo)
 	router.post('/:videoId/comments', protect, addComment)
 	router.delete('/:videoId/comments/:commentId', protect, deleteComment)
-	router.delete('/:videoId', protect, deleteVideo)
 
 	return router
 }
 
-async function getVideoViews(videos) {
+export async function getVideoViews(videos) {
 	for (const video of videos) {
 		const views = await prisma.view.count({
 			where: {
@@ -80,7 +81,7 @@ async function getTrendingVideos(req, res) {
 async function searchVideos(req, res, next) {
 	if (!req.query.query) {
 		return next({
-			message: 'Please enter a search query.',
+			message: 'Please enter a search query',
 			statusCode: 400
 		})
 	}
@@ -145,7 +146,7 @@ async function addComment(req, res, next) {
 
 	if (!video) {
 		return next({
-			message: `No video found with id: "${req.params.videoId}" `,
+			message: `No video found with id: "${req.params.videoId}"`,
 			statusCode: 404
 		})
 	}
@@ -170,8 +171,8 @@ async function addComment(req, res, next) {
 }
 
 async function deleteComment(req, res) {
-	await prisma.comment.findUnique({
-		white: {
+	const comment = await prisma.comment.findUnique({
+		where: {
 			id: req.params.commentId
 		},
 		select: {
@@ -182,7 +183,7 @@ async function deleteComment(req, res) {
 	if (comment.userId !== req.user.id) {
 		return res
 			.status(401)
-			.send('You are not authorized to delet this comment.')
+			.send('You are not authorized to delete this comment')
 	}
 
 	await prisma.comment.delete({
@@ -479,14 +480,27 @@ async function getVideo(req, res, next) {
 		})
 	}
 
-	const dislikesCount = await prisma.videoLike.count({
+	const likesCount = await prisma.videoLike.count({
 		where: {
 			AND: {
-				videoIds: {
+				videoId: {
 					equals: req.params.videoId
 				},
 				like: {
-					euals: 1
+					equals: 1
+				}
+			}
+		}
+	})
+
+	const dislikesCount = await prisma.videoLike.count({
+		where: {
+			AND: {
+				videoId: {
+					equals: req.params.videoId
+				},
+				like: {
+					equals: -1
 				}
 			}
 		}
@@ -514,6 +528,7 @@ async function getVideo(req, res, next) {
 	video.likesCount = likesCount
 	video.dislikesCount = dislikesCount
 	video.isVideoMine = isVideoMine
+	video.views = views
 	video.isSubscribed = Boolean(isSubscribed)
 	video.isViewed = Boolean(isViewed)
 	video.subscribersCount = subscribersCount

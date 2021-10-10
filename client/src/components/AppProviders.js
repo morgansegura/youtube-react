@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ReactQueryConfigProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query-devtools'
+import SnackbarProvider from 'react-simple-snackbar'
 // Context
 import { AuthProvider } from '@context/auth-context'
 // Styled
@@ -25,11 +26,13 @@ function AppProviders({ children }) {
 		<ReactQueryConfigProvider config={config}>
 			<Router>
 				<AuthProvider>
-					<ThemeProvider theme={darkTheme}>
-						<GlobalStyle />
-						<ReactQueryDevtools />
-						{children}
-					</ThemeProvider>
+					<SnackbarProvider>
+						<ThemeProvider theme={darkTheme}>
+							<GlobalStyle />
+							<ReactQueryDevtools />
+							{children}
+						</ThemeProvider>
+					</SnackbarProvider>
 				</AuthProvider>
 			</Router>
 		</ReactQueryConfigProvider>

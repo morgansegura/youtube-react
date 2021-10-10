@@ -1,28 +1,79 @@
 import React from 'react'
-import Button from '../styled/Button'
-import Wrapper from '../styled/UploadVideoModal'
-import { CloseIcon } from './Icons'
-import VideoPlayer from './VideoPlayer'
+import { useHistory } from 'react-router-dom'
+import { useSnackbar } from 'react-simple-snackbar'
+// Context
+import { useAuth } from '@context/auth-context'
+// Utils
+import { addVideo } from '@utils/api-client'
+// Components
+import VideoPlayer from '@components/VideoPlayer'
+// Styled
+import Button from '@styled/Button'
+import Wrapper from '@styled/UploadVideoModal'
 
-function UploadVideoModal() {
+// Icons
+import { CloseIcon } from '@icons'
+
+function UploadVideoModal({
+	previewVideo,
+	thumbnail,
+	url,
+	defaultTitle,
+	closeModal
+}) {
+	const user = useAuth()
+	const history = useHistory()
+	const [openSnackbar] = useSnackbar()
 	const [tab, setTab] = React.useState('PREVIEW')
+	const [title, setTitle] = React.useState(defaultTitle)
+	const [description, setDescription] = React.useState('')
+
+	async function handleTab() {
+		if (tab === 'PREVIEW') {
+			setTab('FORM')
+		} else {
+			if (!title.trim() || !description.trim()) {
+				return openSnackbar('Please fill in all the fields')
+			}
+
+			const video = {
+				title,
+				description,
+				url,
+				thumbnail
+			}
+
+			await addVideo(video)
+			closeModal()
+			openSnackbar('Video published!')
+			history.push(`/channel/${user.id}`)
+		}
+	}
 
 	return (
 		<Wrapper>
 			<div className="modal-content">
 				<div className="modal-header">
 					<div className="modal-header-left">
-						<CloseIcon />
-						<h3>Video Uploaded!</h3>
+						<CloseIcon onClick={closeModal} />
+						<h3>
+							{url ? (
+								'Video Uploaded!'
+							) : (
+								<span className="loading">Uploading...</span>
+							)}
+						</h3>
 					</div>
-					<div style={{ display: 'block' }}>
-						<Button>{tab === 'PREVIEW' ? 'Next' : 'Upload'}</Button>
+					<div style={{ display: url ? 'block' : 'none' }}>
+						<Button onClick={handleTab}>
+							{tab === 'PREVIEW' ? 'Next' : 'Upload'}
+						</Button>
 					</div>
 				</div>
 
 				{tab === 'PREVIEW' && (
 					<div className="tab video-preview">
-						<VideoPlayer />
+						<VideoPlayer previewUrl={previewVideo} video={url} />
 					</div>
 				)}
 
@@ -32,8 +83,16 @@ function UploadVideoModal() {
 						<input
 							type="text"
 							placeholder="Enter your video title"
+							value={title}
+							onChange={event => setTitle(event.target.value)}
 						/>
-						<textarea placeholder="Tell viewers about your video" />
+						<textarea
+							placeholder="Tell viewers about your video"
+							value={description}
+							onChange={event =>
+								setDescription(event.target.value)
+							}
+						/>
 					</div>
 				)}
 			</div>
