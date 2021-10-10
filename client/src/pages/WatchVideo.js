@@ -2,15 +2,19 @@
 import React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router'
+// API Client
 import {
 	client,
 	likeVideo,
 	dislikeVideo,
 	toggleSubscribeUser
 } from '@utils/api-client'
+// Utils
 import { formatCreatedAt } from '@utils/date'
+// Hooks
+import { useAuthAction } from '@hooks'
 // Components
-import { AddComment, NoResults, VideoPlayer } from '@components'
+import { AddComment, NoResults, VideoPlayer, VideoCard } from '@components'
 // Skeltons
 import { WatchVideoSkeleton } from '@skeletons'
 // Styled
@@ -18,10 +22,10 @@ import Button from '@styled/Button'
 import Wrapper from '@styled/WatchVideo'
 // Icons
 import { DislikeIcon, LikeIcon } from '@icons'
-import { VideoCard } from '../components'
 
 function WatchVideo() {
 	const { videoId } = useParams()
+	const handleAuthAction = useAuthAction()
 	const { data: video, isLoading: isLoadingVideo } = useQuery(
 		['WatchVideo', videoId],
 		() => client.get(`/videos/${videoId}`).then(res => res.data.video)
@@ -45,13 +49,13 @@ function WatchVideo() {
 	}
 
 	function handleLikeVideo(videoId) {
-		likeVideo(videoId)
+		handleAuthAction(likeVideo, videoId)
 	}
 	function handleDislikeVideo(videoId) {
-		dislikeVideo(videoId)
+		handleAuthAction(dislikeVideo, videoId)
 	}
 	function handleToggleSubscribe(channelId) {
-		toggleSubscribeUser(channelId)
+		handleAuthAction(toggleSubscribeUser, channelId)
 	}
 
 	return (
