@@ -22,6 +22,7 @@ import Button from '@styled/Button'
 import Wrapper from '@styled/WatchVideo'
 // Icons
 import { DislikeIcon, LikeIcon } from '@icons'
+import { Link } from 'react-router-dom'
 
 function WatchVideo() {
 	const { videoId } = useParams()
@@ -102,7 +103,11 @@ function WatchVideo() {
 								alt={`${video.user.username} channel avatar`}
 							/>
 							<div className="channel-info-meta">
-								<h4>{video.user.username}</h4>
+								<h4>
+									<Link to={`/channel/${video.user.id}`}>
+										{video.user.username}
+									</Link>
+								</h4>
 								<span className="secondary small">
 									{video.subscribersCount} subscribers
 								</span>
