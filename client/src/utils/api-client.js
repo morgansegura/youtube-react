@@ -6,7 +6,6 @@ export const client = axios.create({
 })
 
 export function authenticate(response) {
-	console.log({ response })
 	client({
 		method: 'POST',
 		url: '/auth/google-login',

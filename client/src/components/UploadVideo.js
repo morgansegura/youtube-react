@@ -39,7 +39,6 @@ function UploadVideo() {
 				file,
 				preset: 'cviqzvti'
 			})
-			// console.log(url)
 
 			const extension = path.extname(url)
 			setThumbnail(url.replace(extension, '.jpg'))
