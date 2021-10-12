@@ -64,10 +64,7 @@ function Channel() {
 	return (
 		<Wrapper editProfile={channel.isMe}>
 			<div className="cover">
-				<img
-					src={channel.cover}
-					alt={`${channel.avatar}'s cover image`}
-				/>
+				<img src={channel.cover} alt={`${channel.avatar}'s cover`} />
 			</div>
 
 			<div className="header-tabs">
