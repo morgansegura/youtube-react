@@ -17,7 +17,7 @@ function Navbar({ toggleSidebarOpen }) {
 			<div className="logo flex-row">
 				<HamburgerIcon
 					onClick={toggleSidebarOpen}
-					className="toggle-navhandler"
+					className="hamburger-icon toggle-navhandler"
 				/>
 				<span>
 					<NavLink to="/">
