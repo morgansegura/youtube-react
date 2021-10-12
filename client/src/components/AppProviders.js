@@ -9,6 +9,8 @@ import { AuthProvider } from '@context/auth-context'
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyle } from '@styled'
 import { darkTheme } from '@styled/theme'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorFallback } from '@components'
 
 const config = {
 	queries: {
@@ -23,19 +25,21 @@ const config = {
 
 function AppProviders({ children }) {
 	return (
-		<ReactQueryConfigProvider config={config}>
-			<Router>
-				<AuthProvider>
-					<SnackbarProvider>
-						<ThemeProvider theme={darkTheme}>
-							<GlobalStyle />
-							<ReactQueryDevtools />
-							{children}
-						</ThemeProvider>
-					</SnackbarProvider>
-				</AuthProvider>
-			</Router>
-		</ReactQueryConfigProvider>
+		<ErrorBoundary FallbackComponent={ErrorFallback}>
+			<ReactQueryConfigProvider config={config}>
+				<Router>
+					<AuthProvider>
+						<SnackbarProvider>
+							<ThemeProvider theme={darkTheme}>
+								<GlobalStyle />
+								<ReactQueryDevtools />
+								{children}
+							</ThemeProvider>
+						</SnackbarProvider>
+					</AuthProvider>
+				</Router>
+			</ReactQueryConfigProvider>
+		</ErrorBoundary>
 	)
 }
 
