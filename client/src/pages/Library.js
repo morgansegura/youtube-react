@@ -1,21 +1,28 @@
-import React from "react";
-import { LibIcon } from "../components/Icons";
-import SignUpCard from "../components/SignUpCard";
+import React from 'react'
+import { LibIcon } from '@icons'
+import { SignUpCard } from '@components'
+import { useAuth } from '@context/auth-context'
+import { History, LikedVideos } from '@pages'
 
 function Library() {
-  const isAuth = false;
+	const user = useAuth()
 
-  if (!isAuth) {
-    return (
-      <SignUpCard
-        icon={<LibIcon />}
-        title="Enjoy your favorite videos"
-        description="Sign in to access videos that you’ve liked or saved"
-      />
-    );
-  }
+	if (!user) {
+		return (
+			<SignUpCard
+				icon={<LibIcon />}
+				title="Enjoy your favorite videos"
+				description="Sign in to access videos that you’ve liked or saved."
+			/>
+		)
+	}
 
-  return <>library</>;
+	return (
+		<>
+			<History />
+			<LikedVideos />
+		</>
+	)
 }
 
-export default Library;
+export default Library
